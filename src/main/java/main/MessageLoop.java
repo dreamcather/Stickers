@@ -1,12 +1,17 @@
+package main;
+
 import javafx.scene.control.TextArea;
 
 public class MessageLoop extends Thread {
     Client client;
     TextArea textArea;
+    Game game;
 
-    public MessageLoop(Client client, TextArea textArea) {
+    public MessageLoop(Client client,Game game, TextArea textArea) {
         this.client = client;
         this.textArea = textArea;
+        setDaemon(true);
+        this.game = game;
     }
 
     public void run(){
@@ -21,6 +26,9 @@ public class MessageLoop extends Thread {
                 if(res!=null){
                     textArea.setText(textArea.getText()+"\n"+res);
                 }
+            }
+            if(client.iHaveGame()){
+                game.showNewOpponentFound();
             }
         }
     }

@@ -1,3 +1,7 @@
+package main;
+
+import main.Bridge;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -62,5 +66,22 @@ public class Client {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void gameRequest(String name){
+        try {
+            bridge.gameRequest(this.name,name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  boolean iHaveGame(){
+        try {
+            return bridge.isGame(name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

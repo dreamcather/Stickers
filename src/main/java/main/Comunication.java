@@ -1,3 +1,4 @@
+package main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
@@ -22,12 +22,15 @@ public class Comunication extends Thread {
     Client client;
     String curentReciver =null;
     MessageLoop messageLoop = null;
+    Button setGame;
+    Game game;
 
-    public Comunication(Pane pane, Client client) {
+    public Comunication(Pane pane, Client client,Game game) {
         this.pane = pane;
         this.client = client;
         messageBox = new TextArea();
         messageRider = new TextArea();
+        this.game = game;
         messageBox.setLayoutX(100);
         messageBox.setLayoutY(300);
         comboBox = new ComboBox<>();
@@ -36,6 +39,10 @@ public class Comunication extends Thread {
         messageRider.setLayoutX(100);
         messageRider.setLayoutY(490);
         messageRider.setMaxHeight(10);
+        setGame = new Button();
+        setGame.setLayoutX(200);
+        setGame.setLayoutY(270);
+        setGame.setText("Бросить вызов");
         comboBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -65,6 +72,15 @@ public class Comunication extends Thread {
                 }
             }
         });
+        setGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(curentReciver!=null){
+                    client.gameRequest(curentReciver);
+                }
+            }
+        });
+
     }
 
     public void show(){
@@ -74,7 +90,8 @@ public class Comunication extends Thread {
         comboBox.setItems(names);
         pane.getChildren().add(comboBox);
         pane.getChildren().add(messageRider);
-        messageLoop = new MessageLoop(client,messageBox);
+        pane.getChildren().add(setGame);
+        messageLoop = new MessageLoop(client,game,messageBox);
         messageLoop.start();
 
     }

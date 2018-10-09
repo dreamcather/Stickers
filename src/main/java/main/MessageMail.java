@@ -1,12 +1,18 @@
+package main;
+
 import sun.misc.Queue;
 
 public class MessageMail {
     String name;
     Queue<String> messageQueqe;
+    boolean gameRequest;
+    String gameRequestReciver;
 
     public MessageMail(String name) {
         this.name = name;
         messageQueqe = new Queue<>();
+        gameRequest=false;
+        gameRequestReciver=null;
     }
 
     public void addMessage(String value){
@@ -31,5 +37,18 @@ public class MessageMail {
 
     public boolean isEmpty(){
         return messageQueqe.isEmpty();
+    }
+
+    public void gameRequest(String name){
+        gameRequest = true;
+        gameRequestReciver = name;
+    }
+
+    public boolean isGame(){
+        if(gameRequest) {
+            gameRequest =false;
+            return true;
+        }
+        return false;
     }
 }

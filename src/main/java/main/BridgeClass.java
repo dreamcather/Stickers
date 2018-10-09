@@ -1,3 +1,5 @@
+package main;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -51,9 +53,18 @@ public class BridgeClass extends UnicastRemoteObject implements Bridge {
         return  !messageMail.isEmpty();
     }
 
-    @Override
     public String getMessage(String name) throws RemoteException {
         MessageMail messageMail = find(name);
         return messageMail.getMessage();
+    }
+
+    public void gameRequest(String whoSend, String reciver) throws RemoteException {
+        MessageMail messageMail =find(reciver);
+        messageMail.gameRequest(whoSend);
+    }
+
+    public boolean isGame(String name) throws RemoteException {
+        MessageMail messageMail = find(name);
+        return messageMail.isGame();
     }
 }

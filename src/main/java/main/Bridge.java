@@ -1,9 +1,11 @@
+package main;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface Bridge extends Remote {
-    final String NAME = "Bridge";
+    final String NAME = "main.Bridge";
 
     public int addName(String name) throws RemoteException;
 
@@ -16,4 +18,8 @@ public interface Bridge extends Remote {
     public boolean iHaveMail(String name)throws RemoteException;
 
     public String getMessage(String name) throws RemoteException;
+
+    public void gameRequest(String whoSend, String reciver) throws RemoteException;
+
+    public boolean isGame(String name) throws RemoteException;
 }
